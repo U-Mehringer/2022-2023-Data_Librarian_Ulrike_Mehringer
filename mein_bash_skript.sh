@@ -1,7 +1,9 @@
 echo "Skript beginnt"
 
-wc -l *tsv
+wc -l *csv
+ls -l
+NAME = "ulrike mehringer"
 
-echo "Skript beendet"
+echo "Skript beendet
 
 
