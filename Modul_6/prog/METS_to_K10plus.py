@@ -18,42 +18,50 @@ from tkinter import ttk
 #Funktion Eingabe Projekname
 def project_input():
     global od_project    # Ich ENTSCHULDIGE mich!!
-    od_project = entry1.get()
-    delete_input()
-    entry1.focus_set()
-    mets_to_k10plus()
+    od_project = entry_prj.get()
+    od_project = od_project.replace(' ','')
+    #print(od_project)
+    if (len(od_project)!=0):
+        delete_input()
+        entry_prj.focus_set()
+        mets_to_k10plus()
     print("fertig")
     
 
 #Funktion Eingabe löschen
 def delete_input():
-    entry1.delete(0,tk.END)
+    entry_prj.delete(0,tk.END)
+    entry_prj.focus_set()
     
 
 # Funktion gnd_to_ppn: Personennormsatz-ID (PPN) über die GND-Nummer im K10Plus abrufen
 def gnd_to_ppn(gnd_nr):  
-## Normsatz aus K10Plus auslesen
+    # Normsatz aus K10Plus auslesen
     url = "http://sru.k10plus.de/opac-de-627!rec=2?&operation=searchRetrieve&query=pica.nid="+gnd_nr+"&maximumRecords=1&recordSchema=mods"
     person_xml = "../data/person.xml"
-    urllib.request.urlretrieve(url,person_xml)  
-## XML parsen
+    urllib.request.urlretrieve(url,person_xml) 
+    # XML parsen
     person_tree = ET.parse(person_xml)
     person_root = person_tree.getroot()    
-## K10Plus-PPN aus person_xml auslesen
+    # K10Plus-PPN aus person_xml auslesen
     rec_id = person_root.find('.//{http://www.loc.gov/mods/v3}recordIdentifier')   
-## Variable für die Textausgabe
+    # Variable für die Textausgabe
     person_ppn = rec_id.text
     return(person_ppn)
 
 
 # Hauptfunktion METS/MODS-Daten des OpenDigi-Projekts einlesen, verändern, ausgeben
 def mets_to_k10plus():
-    # METS/MODS-Daten des OpenDigi-Projekts einlesen
+    # Download METS/MODS-Daten des OpenDigi-Projekts
     url = "https://idb.ub.uni-tuebingen.de/opendigi/"+od_project+"/mets"
     od_xml = "../data/"+od_project+".xml"
-    urllib.request.urlretrieve(url,od_xml)
+    try:
+        urllib.request.urlretrieve(url,od_xml)
+    except urllib.error.HTTPError as err:
+        delete_input()
+        exit
 
-    # Zieldatei anlegen
+    # Ausgabedatei anlegen
     if os.path.exists("../data/"+od_project+".txt"):
         os.remove("../data/"+od_project+".txt")
     
@@ -214,8 +222,6 @@ def mets_to_k10plus():
     project_file.close()
     project_sort.close()
 
-    print("fertig")
-
 
 # Hauptfenster definieren und auf einer Variablen ablegen, um später darauf zuzugreifen
 window = tk.Tk()
@@ -228,24 +234,24 @@ style = ttk.Style()
 style.theme_use('classic')
 
 # Label-Widget zur Ausgabe von Textbausteinen mit Layoutmanager pack
-intro_text = 'Dwork-Projektname eingeben:'
-label1 = ttk.Label(window,text=intro_text,font=('arial',20),padding=80)
-label1.pack(fill='x')
+intro_text = 'OpenDigi-Projektname eingeben:'
+label_intro = ttk.Label(window,text=intro_text,font=('arial',20),padding=80)
+label_intro.pack(fill='x')
 
 # Entry-widget zur Einabe
-entry1 = ttk.Entry(window,width=40,font=('arial',20))
-entry1.focus_set()
-entry1.pack()
+entry_prj = ttk.Entry(window,width=40,font=('arial',20))
+entry_prj.focus_set()
+entry_prj.pack()
 
 # Button erzeugen
-button1 = ttk.Button(window,text='K10Plus Titelaufnahme',padding=30,command=project_input)
-button1.pack(side='left',expand=True)
+button_send = ttk.Button(window,text='K10Plus Titelaufnahme',padding=30,command=project_input)
+button_send.pack(side='left',expand=True)
 
-button2 = ttk.Button(window,text='Eingabe löschen',padding=30,command=delete_input)
-button2.pack(side='left',expand=True)
+button_del = ttk.Button(window,text='Eingabe löschen',padding=30,command=delete_input)
+button_del.pack(side='left',expand=True)
 
-button3 = ttk.Button(window,text='Beenden',padding=30,command=window.destroy)
-button3.pack(side='left',expand=True)
+button_close = ttk.Button(window,text='Beenden',padding=30,command=window.destroy)
+button_close.pack(side='left',expand=True)
 
 # Eventloop starten
 window.mainloop()
