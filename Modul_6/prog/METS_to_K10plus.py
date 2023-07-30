@@ -15,17 +15,44 @@ import tkinter as tk
 from tkinter import ttk
 
 
-#Funktion Eingabe Projekname
+#Funktion Eingabe Opendigi-Projektname, METS/MODS-Daten einlesen
 def project_input():
-    global od_project    # Ich ENTSCHULDIGE mich!!
-    od_project = entry_prj.get()
-    od_project = od_project.replace(' ','')
-    #print(od_project)
-    if (len(od_project)!=0):
-        delete_input()
-        entry_prj.focus_set()
-        mets_to_k10plus()
-    print("fertig")
+    
+    # Umlaute in Projektnamen nicht erlaubt
+    if re.search("[äÄöÖüÜß]",entry_prj.get()):
+        # delete_input()
+        error_window()
+    else:
+        od_project = entry_prj.get()
+        od_project = od_project.replace(' ','')
+        if (len(od_project)!=0):
+            # Download METS/MODS-Daten des OpenDigi-Projekts, 
+            # dabei Eingabe nicht-existierender Projektnamen abfangen
+            url = "https://idb.ub.uni-tuebingen.de/opendigi/"+od_project+"/mets"
+            od_xml = "../data/"+od_project+".xml"
+            try:
+                urllib.request.urlretrieve(url,od_xml)
+                mets_to_k10plus(od_project)
+                delete_input()
+                entry_prj.focus_set()
+            except urllib.error.HTTPError as err:
+                error_window()
+                window.mainloop()
+                            
+                            
+def error_window():
+    # Fehler-Window definieren
+    window_error = tk.Tk()
+    window_error.title('Fehlermeldung')
+    window_error.geometry('450x250')
+    # Label-Widget für Textausgabe
+    label_error = ttk.Label(window_error,text="Projektname existiert nicht",font=('arial',20),padding=50)
+    label_error.pack()
+    # Button zum Schließen
+    button_error = ttk.Button(window_error,text='OK',padding=30,command=window_error.destroy)
+    button_error.pack()
+    # Eventloop starten
+    window_error.mainloop()
     
 
 #Funktion Eingabe löschen
@@ -50,17 +77,9 @@ def gnd_to_ppn(gnd_nr):
     return(person_ppn)
 
 
-# Hauptfunktion METS/MODS-Daten des OpenDigi-Projekts einlesen, verändern, ausgeben
-def mets_to_k10plus():
-    # Download METS/MODS-Daten des OpenDigi-Projekts
-    url = "https://idb.ub.uni-tuebingen.de/opendigi/"+od_project+"/mets"
-    od_xml = "../data/"+od_project+".xml"
-    try:
-        urllib.request.urlretrieve(url,od_xml)
-    except urllib.error.HTTPError as err:
-        delete_input()
-        exit
-
+# Funktion METS/MODS-Daten des OpenDigi-Projekts bearbeiten und ausgeben
+def mets_to_k10plus(od_project):
+    
     # Ausgabedatei anlegen
     if os.path.exists("../data/"+od_project+".txt"):
         os.remove("../data/"+od_project+".txt")
@@ -68,10 +87,19 @@ def mets_to_k10plus():
     project_file = open("../data/"+od_project+".txt",'a')
 
     # XML parsen
+    od_xml = "../data/"+od_project+".xml"
     od_tree = ET.parse(od_xml)
     od_root = od_tree.getroot()
 
     # Einzelne Felder
+    
+    # PPN Digitalisat, Feld 0100
+    od_id = od_root.findall(".//{http://www.loc.gov/mods/v3}recordIdentifier")
+    
+    for i in range(0,len(od_id)):
+        if od_id[i].attrib["source"]=="swb-ppn":
+            od_swbppn = od_id[i].text
+            project_file.write('0100 PPN FÜR DIGITALISAT BEREITS VORHANDEN: '+od_swbppn+'!!!!!\n')
 
     # Bibliografische Gattung und Status, Feld 0500
     od_smap = od_root.find(".//{http://www.loc.gov/METS/}structMap")
@@ -94,13 +122,16 @@ def mets_to_k10plus():
 
     # Entstehungsdatum, Feld 1100, 1100 $n
     od_date = od_root.findall(".//{http://www.loc.gov/mods/v3}dateIssued")
-    od_date_norm = od_date[0].text
-    od_date_subm = "["+od_date[1].text+"]"
-
-    if re.search(r"[oO]. *[dDJ].",od_date_subm):
-        od_date_norm = "[1XXX]"
-        od_date_subm = "[Entstehungdatum nicht ermittelbar]"
-
+    
+    for i in range(0,len(od_date)):
+        if 'keyDate' in od_date[i].attrib:
+            od_date_norm = od_date[i].text[0:4]
+        else:
+            od_date_subm = od_date[i].text
+            if re.search(r"[oO]. *[dDJ].",od_date_subm):
+                    od_date_norm = "[1XXX]"
+                    od_date_subm = "[Entstehungdatum nicht ermittelbar]"
+                           
     project_file.write('\n1100 '+od_date_norm+'$n'+od_date_subm)
 
     # Jahr der Digitalisierung, Feld 1109
@@ -112,8 +143,8 @@ def mets_to_k10plus():
     # Sprache, Feld 1500
     od_lang = od_root.find(".//{http://www.loc.gov/mods/v3}languageTerm").text
 
-    if re.search(r"; *",od_lang):
-        od_lang = str_replace("; ","$a",od_lang)
+    if re.search(r" *; *",od_lang):
+        od_lang = re.sub(" *; *","$a",od_lang)
     
     project_file.write('\n1500 '+od_lang)
 
@@ -129,9 +160,9 @@ def mets_to_k10plus():
             od_doi = od_pid[i].text
             project_file.write('\n2051 '+od_doi)
             project_file.write('\n4950 https://doi.org/'+od_doi+'$xR')
-
+            
     project_file.write('\n4950 http://idb.ub.uni-tuebingen.de/opendigi/'+od_project+'$xD$3Volltext$4LF$534')
-        
+                            
     # Personen, Feld 3000, 3010
     # Rollenkürzel Extension
     role_ext = {'aut':'VerfasserIn$4aut',
@@ -167,6 +198,13 @@ def mets_to_k10plus():
             project_file.write('\n3010 !'+name_ppn+'!$B'+role_ext[od_name_role])
         else:
             od_name_display = od_root.findall(".//{http://www.loc.gov/mods/v3}displayForm")[i].text
+         
+            # Funktionsbezeichnung [Schreiber] in Fußnote verschieben
+            if "[" in od_name_display:
+                od_foot = re.sub(r".*?\[","[",od_name_display)
+                od_name_display = re.sub(r" *\[.*?\]","",od_name_display)
+                project_file.write('\n4201 '+od_name_display+' '+od_foot)                          
+            
             # persönliche und moderne Namen
             if ',' in od_name_display:
                 project_file.write('\n3010 '+od_name_display+'$B'+role_ext[od_name_role])
@@ -180,15 +218,27 @@ def mets_to_k10plus():
 
     # Titel, Feld 4000
     od_title = od_root.find(".//{http://www.loc.gov/mods/v3}title").text
+    od_subtitle = od_root.find(".//{http://www.loc.gov/mods/v3}subTitle")
     project_file.write('\n4000 '+od_title+" - Tübingen, Universitätsbibliothek, "+od_shelf)
+    if od_subtitle:
+        project_file.write('$d'+od_subtitle.text)
 
-    # Entstehungsort, Feld 4046 (Feld 4040?)
-    od_place = od_root.find(".//{http://www.loc.gov/mods/v3}placeTerm").text
-
-    if re.search(r"[oO]. *[oO.]",od_place):
+    # Entstehungsort, Feld 4046
+    od_place = od_root.find(".//{http://www.loc.gov/mods/v3}placeTerm")
+    if od_place is None:
         od_place = "[Entstehungsort nicht ermittelbar]"
-    
+    else:
+        od_place = od_place.text
+        if re.search(r"[oO]. *[oO].*",od_place):
+           od_place = "[Entstehungsort nicht ermittelbar]"
+               
     project_file.write('\n4046 '+od_place+'$h'+od_date_subm)
+    
+    # Umfang des Originals, Feld 4060
+    # 4060 xyz Blatt
+    
+    # Umfang der elektronischen Ressource, Feld 4068
+    # 4068 1 Online-Ressource (xyz Seiten)
 
     # Festtext an die Ausgabedatei anhängen
     project_file.write('\n0501 Text$btxt')
@@ -198,6 +248,7 @@ def mets_to_k10plus():
     project_file.write('\n1131 !10457187X!')
     project_file.write('\n1505 $erda')
     project_file.write('\n4022 Online-Ausgabe')
+    project_file.write('\n4040 *** $4prp')
     project_file.write('\n4048 Tübingen$nUniversitätsbibliothek')
     project_file.write('\n4201 Kurzaufnahme einer Handschrift')
     project_file.write('\n4233 $aaa$c2023$5DE-21\n')
@@ -222,6 +273,7 @@ def mets_to_k10plus():
     project_file.close()
     project_sort.close()
 
+    print("fertig")
 
 # Hauptfenster definieren und auf einer Variablen ablegen, um später darauf zuzugreifen
 window = tk.Tk()
