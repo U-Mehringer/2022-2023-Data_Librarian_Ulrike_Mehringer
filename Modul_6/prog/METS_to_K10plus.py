@@ -61,27 +61,27 @@ def delete_input():
     entry_prj.focus_set()
     
 
-# Funktion gnd_to_ppn: Personennormsatz-ID (PPN) über die GND-Nummer im K10Plus abrufen
+# Funktion gnd_to_ppn: K10Plus-ID (PPN) über die GND-Nummer im K10Plus abrufen
 def gnd_to_ppn(gnd_nr):  
     # Normsatz aus K10Plus auslesen
     url = "http://sru.k10plus.de/opac-de-627!rec=2?&operation=searchRetrieve&query=pica.nid="+gnd_nr+"&maximumRecords=1&recordSchema=mods"
-    person_xml = "../data/person.xml"
+    gnd_xml = "../data/gnd.xml"
     
     try:
-        urllib.request.urlretrieve(url,person_xml) 
+        urllib.request.urlretrieve(url,gnd_xml) 
         # XML parsen
-        person_tree = ET.parse(person_xml)
-        person_root = person_tree.getroot()    
-        # K10Plus-PPN aus person_xml auslesen
-        person_ppn = person_root.find(".//{http://www.loc.gov/mods/v3}recordIdentifier")
-        if person_ppn is None:
-            person_ppn ="nn"
+        gnd_tree = ET.parse(gnd_xml)
+        gnd_root = gnd_tree.getroot()    
+        # K10Plus-PPN aus gnd_xml auslesen
+        k10plus_ppn = gnd_root.find(".//{http://www.loc.gov/mods/v3}recordIdentifier")
+        if k10plus_ppn is None:
+            k10plus_ppn ="nn"
         else:
-            person_ppn = person_ppn.text
+            k10plus_ppn = k10plus_ppn.text
     except urllib.error.HTTPError as err:
-        person_ppn = "nn"
+        k10plus_ppn = "nn"
         
-    return(person_ppn)
+    return(k10plus_ppn)
 
     
 # Funktion mw_ppn: swb-ppn einer vorhandenen Gesamtaufnahme auslesen
@@ -288,6 +288,23 @@ def mets_to_k10plus(od_project):
         od_vol_no = str(od_root.find(".//{http://www.loc.gov/mods/v3}partName").text)
         project_file.write("\n4150 "+od_mw_title+"$l"+od_vol_no)
         project_file.write("\n4160 !"+od_mw_ppn+"!$l"+od_vol_no)
+        
+    # Einzelschlagwörter, Feld 5580
+    # Bei Sachschlagwörtern liefert der K10Plus leider nicht-existierende PPNs zurück / mods:topic  ---> melden?
+    # geographische Schlagwörter funktionieren / mods:geographic : 
+    od_geo = od_root.findall(".//{http://www.loc.gov/mods/v3}geographic")
+    
+    for i in range(0,len(od_geo)):
+        y = str(od_geo[i].attrib)
+        print(y)
+        if "valueURI" in y:
+            gnd_url = od_geo[i].attrib["valueURI"]
+            print(gnd_url)
+            gnd_nr = str(re.findall(r"/gnd/(.*)",gnd_url))
+            print(gnd_nr)
+            geo_ppn = gnd_to_ppn(gnd_nr)
+            if geo_ppn != "nn":
+                project_file.write("\n5580 !"+str(geo_ppn)+"!")
 
     # Festtext an die Ausgabedatei anhängen
     project_file.write("\n0501 Text$btxt")
