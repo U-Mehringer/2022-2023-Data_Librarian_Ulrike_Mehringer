@@ -15,10 +15,10 @@ import tkinter as tk
 from tkinter import ttk
 
 
-#Funktion Eingabe Opendigi-Projektname, METS/MODS-Daten einlesen
+#Funktion Eingabe OpenDigi-Projektname, METS/MODS-Daten einlesen
 def input_prj(*event):
     
-    # Umlaute in Projektnamen nicht erlaubt
+    # Umlaute in Eingabe abfangen (als Projektname in OpenDigi nicht zulässig)
     if re.search("[äÄöÖüÜß]",entry_prj.get()):
         # delete_input()
         error_window()
@@ -41,7 +41,7 @@ def input_prj(*event):
                             
                             
 def error_window():
-    # Fehler-Window definieren
+    # Fenster für Fehlermeldeung definieren
     window_error = tk.Tk()
     window_error.title("Fehlermeldung")
     window_error.geometry("450x250")
@@ -99,7 +99,7 @@ def mw_ppn(od_mptr_url):
             mptr_ppn = mptr_id[i].text
         if "mptr_ppn" not in locals():
             mptr_ppn = "***"
-    # Variable für die Textausgabe
+    # Variable für die Textausgabe übergeben
     return(mptr_ppn)
     
 
@@ -149,7 +149,7 @@ def mets_to_k10plus(od_project):
     
     project_file.write("0500 "+od_logi)
 
-    # Entstehungsdatum, Feld 1100, 1100 $n
+    # Entstehungsdatum, Feld 1100 und Unterfeld 1100 $n
     od_date = od_root.findall(".//{http://www.loc.gov/mods/v3}dateIssued")
     
     for i in range(0,len(od_date)):
@@ -193,7 +193,7 @@ def mets_to_k10plus(od_project):
             
     project_file.write("\n4950 http://idb.ub.uni-tuebingen.de/opendigi/"+od_project+"$xD$3Volltext$4LF$534")
                             
-    # Personen, Feld 3000, 3010
+    # Personen, Feld 3010 und Unterfelder 3010 $B und $4
     # Rollenkürzel Extension
     role_ext = {"aut":"VerfasserIn$4aut",
                 "rcp":"AdressatIn$4rcp",
@@ -246,7 +246,7 @@ def mets_to_k10plus(od_project):
                 project_file.write("\n3010 $P"+od_name_display+"$B"+role_ext[od_name_role])
             
             
-    # Signatur, Feld 4000 und 4065 $a
+    # Signatur, Felder 4000 und 4065 $a
     od_shelf = str(od_root.find(".//{http://www.loc.gov/mods/v3}shelfLocator").text)
     project_file.write("\n4065 XA-DE$cUB Tübingen$a"+od_shelf)
 
@@ -296,12 +296,9 @@ def mets_to_k10plus(od_project):
     
     for i in range(0,len(od_geo)):
         y = str(od_geo[i].attrib)
-        print(y)
         if "valueURI" in y:
             gnd_url = od_geo[i].attrib["valueURI"]
-            print(gnd_url)
             gnd_nr = str(re.findall(r"/gnd/(.*)",gnd_url))
-            print(gnd_nr)
             geo_ppn = gnd_to_ppn(gnd_nr)
             if geo_ppn != "nn":
                 project_file.write("\n5580 !"+str(geo_ppn)+"!")

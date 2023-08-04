@@ -38,7 +38,7 @@ try:
     list_tree = ET.parse(list_xml)
     list_root = list_tree.getroot()
     
-    # Projektname
+    # OpenDigi-Projektname
     record_url = list_root.findall(".//{http://www.loc.gov/mods/v3}url")
     
     for i in range(0,len(record_url)):
