@@ -1,0 +1,30 @@
+0100 *** PPN FÜR DIGITALISAT BEREITS VORHANDEN: 1817378015***
+0500 Oau
+0501 Text$btxt
+0502 Computermedien$bc
+0503 Online-Ressource$bcr
+1100 1842$n1258/1842
+1101 crxcn---apaup
+1109 2023
+1131 !10457187X!
+1500 ota
+1505 $erda
+2050 urn:nbn:de:bsz:21-dt-256758
+2051 10.20345/digitue.25675
+3010 !1805752472!$BVerfasserIn$4aut
+4000 Risāle-i iʿtiḳādīye - Tübingen, Universitätsbibliothek, Ma VII 50
+4022 Online-Ausgabe
+4046 [Entstehungsort nicht ermittelbar]$h1258/1842
+4048 Tübingen$nUniversitätsbibliothek
+4060 10 Blatt
+4065 XA-DE$cUB Tübingen$aMa VII 50
+4068 1 Online-Ressource (27 Seiten)
+4201 Kurzaufnahme einer Handschrift
+4233 $aaa$c2023$5DE-21
+4950 http://idb.ub.uni-tuebingen.de/opendigi/MaVII50$xD$3Volltext$4LF$534
+4950 http://nbn-resolving.de/urn:nbn:de:bsz:21-dt-256758$xR$3Volltext$534
+4950 https://doi.org/10.20345/digitue.25675$xR
+
+E* l01
+7100 $Dn
+8012 ditu$adbok$ahssa

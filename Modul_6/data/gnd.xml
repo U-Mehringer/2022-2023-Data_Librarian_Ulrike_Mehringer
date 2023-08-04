@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zs:searchRetrieveResponse xmlns:zs="http://docs.oasis-open.org/ns/search-ws/sruResponse"><zs:numberOfRecords>1</zs:numberOfRecords><zs:records><zs:record><zs:recordSchema>mods</zs:recordSchema><zs:recordXMLEscaping>xml</zs:recordXMLEscaping><zs:recordData><mods xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.loc.gov/mods/v3" version="3.6" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-6.xsd">
+  <typeOfResource/>
+  <originInfo>
+    <place>
+      <placeTerm type="code" authority="marccountry">abn</placeTerm>
+    </place>
+    <issuance/>
+  </originInfo>
+  <subject>
+    <geographicCode authority="iso3166">XA-DE-BW</geographicCode>
+  </subject>
+  <identifier type="uri">http://d-nb.info/gnd/4061533-9</identifier>
+  <recordInfo>
+    <recordCreationDate encoding="marc">120418</recordCreationDate>
+    <recordChangeDate encoding="iso8601">201903171443.2</recordChangeDate>
+    <recordIdentifier source="DE-627">106135309</recordIdentifier>
+    <recordOrigin>Converted from MARCXML to MODS version 3.6 using MARC21slim2MODS3-6.xsl
+				(Revision 1.119 2018/06/21)</recordOrigin>
+  </recordInfo>
+</mods></zs:recordData><zs:recordPosition>1</zs:recordPosition></zs:record></zs:records><zs:echoedSearchRetrieveRequest><zs:version>2.0</zs:version><zs:query>pica.nid=['4061533-9']</zs:query><zs:maximumRecords>1</zs:maximumRecords><zs:recordXMLEscaping>xml</zs:recordXMLEscaping><zs:recordSchema>mods</zs:recordSchema></zs:echoedSearchRetrieveRequest><zs:resultCountPrecision>exact</zs:resultCountPrecision></zs:searchRetrieveResponse>

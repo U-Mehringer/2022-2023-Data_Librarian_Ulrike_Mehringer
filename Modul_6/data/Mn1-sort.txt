@@ -1,0 +1,27 @@
+0100 *** PPN FÜR DIGITALISAT BEREITS VORHANDEN: 1463826869***
+0500 Ocu
+0501 Text$btxt
+0502 Computermedien$bc
+0503 Online-Ressource$bcr
+1100 1841$n1841-1912
+1101 crxcn---apaup
+1109 2023
+1131 !10457187X!
+1500 ger
+1505 $erda
+2050 urn:nbn:de:bsz:21-dt-125492
+3010 Hilgenfeld, Adolf$BSonstige Person, Familie und Körperschaft$4oth
+4000 Nachlass Adolf Hilgenfeld - Tübingen, Universitätsbibliothek, Mn 1
+4022 Online-Ausgabe
+4040 *** !PPN! *** $4prp
+4046 Jena$h1841-1912
+4048 Tübingen$nUniversitätsbibliothek
+4065 XA-DE$cUB Tübingen$aMn 1
+4201 Kurzaufnahme einer Handschrift
+4233 $aaa$c2023$5DE-21
+4950 http://idb.ub.uni-tuebingen.de/opendigi/Mn1$xD$3Volltext$4LF$534
+4950 http://nbn-resolving.de/urn:nbn:de:bsz:21-dt-125492$xR$3Volltext$534
+
+E* l01
+7100 $Dn
+8012 ditu$adbok$ahssa

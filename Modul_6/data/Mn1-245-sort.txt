@@ -1,0 +1,33 @@
+0500 Ofu
+0501 Text$btxt
+0502 Computermedien$bc
+0503 Online-Ressource$bcr
+1100 1872$n1872-1886
+1101 crxcn---apaup
+1109 2023
+1131 !10457187X!
+1500 ger
+1505 $erda
+2050 urn:nbn:de:bsz:21-dt-240109
+2051 10.20345/digitue.24010
+3010 !079553435!$BAdressatIn$4rcp
+3010 !142469793!$BVerfasserIn$4aut
+4000 Briefe von Abraham Kuenen an Adolf Hilgenfeld - Tübingen, Universitätsbibliothek, Mn 1-245
+4022 Online-Ausgabe
+4040 *** !PPN! *** $4prp
+4046 Leiden$h1872-1886
+4048 Tübingen$nUniversitätsbibliothek
+4060 22 Blatt
+4065 XA-DE$cUB Tübingen$aMn 1-245
+4068 1 Online-Ressource (24 Seiten)
+4150 Nachlass Adolf Hilgenfeld$l245
+4160 !1463826869!$l245
+4201 Kurzaufnahme einer Handschrift
+4233 $aaa$c2023$5DE-21
+4950 http://idb.ub.uni-tuebingen.de/opendigi/Mn1-245$xD$3Volltext$4LF$534
+4950 http://nbn-resolving.de/urn:nbn:de:bsz:21-dt-240109$xR$3Volltext$534
+4950 https://doi.org/10.20345/digitue.24010$xR
+
+E* l01
+7100 $Dn
+8012 ditu$adbok$ahssa

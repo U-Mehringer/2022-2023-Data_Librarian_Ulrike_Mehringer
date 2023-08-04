@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zs:searchRetrieveResponse xmlns:zs="http://docs.oasis-open.org/ns/search-ws/sruResponse"><zs:numberOfRecords>1</zs:numberOfRecords><zs:records><zs:record><zs:recordSchema>mods</zs:recordSchema><zs:recordXMLEscaping>xml</zs:recordXMLEscaping><zs:recordData><mods xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.loc.gov/mods/v3" version="3.6" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-6.xsd">
+  <name type="personal" usage="primary">
+    <namePart>Kasabbaşızâde İbrâhim</namePart>
+    <namePart type="date">-1820</namePart>
+  </name>
+  <typeOfResource/>
+  <originInfo script="Latn">
+    <place>
+      <placeTerm type="code" authority="marccountry">bbn</placeTerm>
+    </place>
+    <issuance/>
+  </originInfo>
+  <subject>
+    <geographicCode authority="iso3166">XV</geographicCode>
+  </subject>
+  <name type="personal" altRepGroup="01" script="">
+    <namePart>قصاب باشى زاده ابراهيم</namePart>
+  </name>
+  <identifier type="uri">http://d-nb.info/gnd/1259010104</identifier>
+  <recordInfo>
+    <descriptionStandard>rda</descriptionStandard>
+    <recordContentSource authority="marcorg">DE-627</recordContentSource>
+    <recordCreationDate encoding="marc">220602</recordCreationDate>
+    <recordChangeDate encoding="iso8601">202206022237.5</recordChangeDate>
+    <recordIdentifier source="DE-627">1805752472</recordIdentifier>
+    <recordOrigin>Converted from MARCXML to MODS version 3.6 using MARC21slim2MODS3-6.xsl
+				(Revision 1.119 2018/06/21)</recordOrigin>
+    <languageOfCataloging>
+      <languageTerm authority="iso639-2b" type="code">ger</languageTerm>
+    </languageOfCataloging>
+  </recordInfo>
+</mods></zs:recordData><zs:recordPosition>1</zs:recordPosition></zs:record></zs:records><zs:echoedSearchRetrieveRequest><zs:version>2.0</zs:version><zs:query>pica.nid=['1259010104']</zs:query><zs:maximumRecords>1</zs:maximumRecords><zs:recordXMLEscaping>xml</zs:recordXMLEscaping><zs:recordSchema>mods</zs:recordSchema></zs:echoedSearchRetrieveRequest><zs:resultCountPrecision>exact</zs:resultCountPrecision></zs:searchRetrieveResponse>

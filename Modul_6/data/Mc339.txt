@@ -1,0 +1,30 @@
+0500 Oau
+1100 1393$num 1393
+1109 2023
+4233 $aaa$c2023$5DE-21
+1500 lat
+2050 urn:nbn:de:bsz:21-dt-258226
+4950 http://nbn-resolving.de/urn:nbn:de:bsz:21-dt-258226$xR$3Volltext$534
+2051 10.20345/digitue.25822
+4950 https://doi.org/10.20345/digitue.25822$xR
+4950 http://idb.ub.uni-tuebingen.de/opendigi/Mc339$xD$3Volltext$4LF$534
+3010 !080046096!$BVerfasserIn$4aut
+4201 Schreiber: Hieronymus Angeli de Esslingen
+3010 $PHieronymus Angeli de Esslingen$BSonstige Person, Familie und Körperschaft$4oth
+4201 Schreiber: Meier de Wasszneck, Ulrich
+3010 Meier de Wasszneck, Ulrich$BSonstige Person, Familie und Körperschaft$4oth
+3010 !080353975!$BSonstige Person, Familie und Körperschaft$4oth
+4065 XA-DE$cUB Tübingen$aMc 339
+4000 Novella super quarto libro decretalium Johannis Andreae - Tübingen, Universitätsbibliothek, Mc 339
+4046 [Entstehungsort nicht ermittelbar]$hum 1393
+4060 104 Blatt
+4068 1 Online-Ressource (217 Seiten)
+0501 Text$btxt
+0502 Computermedien$bc
+0503 Online-Ressource$bcr
+1101 crxcn---apaup
+1131 !10457187X!
+1505 $erda
+4022 Online-Ausgabe
+4048 Tübingen$nUniversitätsbibliothek
+4201 Kurzaufnahme einer Handschrift

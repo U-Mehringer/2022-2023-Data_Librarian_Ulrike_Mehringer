@@ -1,0 +1,29 @@
+0100 *** PPN FÜR DIGITALISAT BEREITS VORHANDEN: 1651525196***
+0500 Oau
+0501 Text$btxt
+0502 Computermedien$bc
+0503 Online-Ressource$bcr
+1100 1430$n[15. Jh.]
+1101 crxcn---apaup
+1109 2023
+1131 !10457187X!
+1500 ger
+1505 $erda
+2050 urn:nbn:de:bsz:21-dt-10839
+4000 Tübinger Hausbuch - Tübingen, Universitätsbibliothek, Md 2$dIatromathematisches Kalenderbuch ; die Kunst der Astronomie und Geomantie
+4022 Online-Ausgabe
+4040 *** !PPN! *** $4prp
+4046 Württemberg$h[15. Jh.]
+4048 Tübingen$nUniversitätsbibliothek
+4060 326 Blatt
+4065 XA-DE$cUB Tübingen$aMd 2
+4068 1 Online-Ressource (656 Seiten)
+4201 Kurzaufnahme einer Handschrift
+4233 $aaa$c2023$5DE-21
+4950 http://idb.ub.uni-tuebingen.de/opendigi/Md2$xD$3Volltext$4LF$534
+4950 http://nbn-resolving.de/urn:nbn:de:bsz:21-dt-10839$xR$3Volltext$534
+5580 !106135309!
+
+E* l01
+7100 $Dn
+8012 ditu$adbok$ahssa
