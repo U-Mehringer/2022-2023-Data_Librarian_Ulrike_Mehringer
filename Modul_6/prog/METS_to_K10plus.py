@@ -314,7 +314,7 @@ def mets_to_k10plus(od_project):
     project_file.write("\n4048 Tübingen$nUniversitätsbibliothek")
     project_file.write("\n4201 Kurzaufnahme einer Handschrift\n")
 
-    # Zeilenweise sortieren und in Datei ausgeben
+    # nach Feldnamen sortieren und in Datei ausgeben
     project_file = open("../data/"+od_project+".txt","r")
     data = project_file.readlines()
     data.sort()
@@ -326,7 +326,7 @@ def mets_to_k10plus(od_project):
     for i in range(0,len(data)):
         project_sort.write(data[i])
     
-    #Exemplarsatz
+    # Exemplarsatz
     project_sort.write("\nE* l01")
     project_sort.write("\n7100 $Dn")
     project_sort.write("\n8012 ditu$adbok$ahssa")
@@ -334,6 +334,7 @@ def mets_to_k10plus(od_project):
     project_file.close()
     project_sort.close()
     
+    # Gesamtaufnahme bei mehrteiligen Werken    
     if "od_mptr_prj" in locals():
         od_project = od_mptr_prj
         mets_to_k10plus(od_project)
@@ -370,6 +371,7 @@ button_del.pack(side="left",expand=True)
 button_close = ttk.Button(window,text="Beenden",padding=30,command=window.destroy)
 button_close.pack(side="left",expand=True)
 
+# Funktion input_prj kann auch mit Return aufgerufen werden
 window.bind("<Return>",input_prj)
 
 # Eventloop starten
